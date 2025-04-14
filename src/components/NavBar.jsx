@@ -59,8 +59,8 @@ const NavBar = () => {
             <Nav.Link href="/contact-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
               Contact
             </Nav.Link>
-            <Nav.Link href="/about" className="text-light mx-2 px-2 py-2 nav-link-hover">
-              About
+            <Nav.Link href="/about-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              About Us
             </Nav.Link>
             <Nav.Link href="/sign-up" className="text-light mx-2 px-2 py-2 nav-link-hover">
               <FaUser size={16} className="me-1" /> Sign Up
