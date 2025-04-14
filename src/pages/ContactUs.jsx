@@ -58,7 +58,7 @@ const ContactUs = () => {
         <Alert variant="success" className="py-5">
           <h2>Thank You!</h2>
           <p className="lead">Your message has been sent successfully.</p>
-          <p>We'll get back to you within 24 hours.</p>
+          <p>We will get back to you within 24 hours,Thank You.</p>
           <Button 
             variant="outline-success" 
             className="mt-3"
@@ -168,7 +168,7 @@ const ContactUs = () => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className="mb-3">
-                      <Form.Label>Phone (Optional)</Form.Label>
+                      <Form.Label>Phone</Form.Label>
                       <InputGroup>
                         <InputGroup.Text>
                           <Telephone />
