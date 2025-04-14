@@ -17,6 +17,8 @@ import AdminMenuManagement from './pages/AdminMenuManagement';
 import Signup from './pages/SignUp';
 import FlavorRecommendation from './pages/FlavorRecommendation';
 import FeedbackForm from './pages/Feedbackform';
+import SpinWheel from './pages/SpinWheel';
+import AboutUs from './pages/aboutUs';
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/flavor-recommendation" element={<FlavorRecommendation />} />
         <Route path="/feedback" element={<FeedbackForm />} />
+        <Route path="/about-us" element={<AboutUs />} />
 
         {/* User-Specific Route */}
         <Route path="/profile" element={<ProfilePage />} />
@@ -43,6 +46,7 @@ const App = () => {
         <Route path="/admin-menu-management" element={<AdminMenuManagement />} />
 
         {/* Gamification (Optional Feature) */}
+        <Route path="/spin-wheel" element={<SpinWheel />} />
         
       </Routes>
       <Footer />
