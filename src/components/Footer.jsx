@@ -28,9 +28,9 @@ const Footer = () => {
           <Col md={4}>
             <h5 className="text-uppercase mb-4">Connect With Us</h5>
             <div className="mb-4">
-              <a href="#" className="text-white me-3"><FaFacebook size={24} /></a>
-              <a href="#" className="text-white me-3"><FaInstagram size={24} /></a>
-              <a href="#" className="text-white me-3"><FaTwitter size={24} /></a>
+              <a href="https://www.facebook.com/" className="text-white me-3"><FaFacebook size={24} /></a>
+              <a href="https://www.instagram.com/" className="text-white me-3"><FaInstagram size={24} /></a>
+              <a href="https://www.instagram.com/" className="text-white me-3"><FaTwitter size={24} /></a>
               <a href="mailto:info@idealcafe.com" className="text-white"><FaEnvelope size={24} /></a>
             </div>
             <p>
