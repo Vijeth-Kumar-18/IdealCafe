@@ -9,7 +9,7 @@ import {
   Alert,
   InputGroup
 } from 'react-bootstrap';
-import { Envelope, Lock, Google, Facebook } from 'react-bootstrap-icons';
+import { Envelope, Lock, Google, Facebook, Eye, EyeSlash } from 'react-bootstrap-icons';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +17,7 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // 🔒 Toggle visibility
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,9 +29,7 @@ const Login = () => {
       return;
     }
 
-    // Simulate login API call
     try {
-      // Replace with actual authentication logic
       console.log(`Login attempt with: ${email}`);
       setError('');
       alert(`Successfully logged in as: ${email}`);
@@ -83,13 +82,20 @@ const Login = () => {
                       <Lock />
                     </InputGroup.Text>
                     <Form.Control
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       minLength={6}
                     />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setShowPassword(!showPassword)}
+                      tabIndex={-1}
+                    >
+                      {showPassword ? <EyeSlash /> : <Eye />}
+                    </Button>
                     <Form.Control.Feedback type="invalid">
                       Password must be at least 6 characters.
                     </Form.Control.Feedback>
