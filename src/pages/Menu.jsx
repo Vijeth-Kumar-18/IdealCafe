@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 const Menu = () => {
-  const [items, setItems] = useState([
+  const [items] = useState([
     { name: 'Vanilla', price: 100, category: 'Ice Creams', image: 'vanilla.jpg' },
     { name: 'Chocolate', price: 150, category: 'Ice Creams', image: 'chocolate.jpg' },
   ]);
