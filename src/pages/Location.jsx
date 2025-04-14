@@ -3,7 +3,7 @@ import { Container, ListGroup } from 'react-bootstrap';
 
 const Locations = () => {
   const locations = [
-    { name: 'Ideal Café - Hampankatta', address: 'Main Road, Mangalore', contact: '0824-123456' },
+    { name: 'Ideal Café - Mulki', address: 'Main Road, Mangalore', contact: '0824-123456' },
     { name: 'Ideal Café - Lalbagh', address: 'Lalbagh Circle, Mangalore', contact: '0824-654321' },
   ];
 
