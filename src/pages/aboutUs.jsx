@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 import { FaCoffee, FaHeart, FaAward, FaUsers } from 'react-icons/fa';
-import { Navbar, Nav} from 'react-bootstrap';
+import {  Nav} from 'react-bootstrap';
 const AboutUs = () => {
   return (
     <Container className="py-5">
@@ -101,15 +101,15 @@ const AboutUs = () => {
             <Col md={4} className="mb-4">
               <Card className="border-0 text-center">
                 <Image 
-                  src="https://randomuser.me/api/portraits/women/32.jpg" 
+                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgXLlOZLkqcIBtJ_-dBR4gZ21qAkbFWxe3sGcfrH4rS5yfagSBcynBy3P9tcUp9rgJ3sRsg081oGR7gvhKAwstw-C2wgfD2tMkwuRbiLVKYLayuLZWFS7M8x_zrFFIXxUNaBs6aMDISZ_YjrwyB6Iz_bDJ7dRl32T6Wr6oWCSit66cn8EFR0pDgtaeCG1o/s500/1.jpg" 
                   roundedCircle 
                   className="mx-auto mb-3" 
                   width={150}
                   height={150}
                 />
                 <Card.Body>
-                  <h5>Sarah Johnson</h5>
-                  <p className="text-muted">Head Barista</p>
+                  <h5>Y G Pavan</h5>
+                  <p className="text-muted">Head Chef</p>
                   <p className="small">
                     "Coffee is my passion and sharing it with you is my joy."
                   </p>
@@ -119,14 +119,14 @@ const AboutUs = () => {
             <Col md={4} className="mb-4">
               <Card className="border-0 text-center">
                 <Image 
-                  src="https://randomuser.me/api/portraits/men/75.jpg" 
+                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUOv-yH-56YrQgXtvANemaTKrW2N37xQCvNqIECm8fJ8wTvUpV2ZlSvb7C6gkUv0Ks7xhIypS0YJzilH_VfjQxbhrkdlyNUuGn1fNzEQD_8WqAB6Du98OJCkEYLdgJaPXMj9a23WGVGGDw5MaZ_omVpuVZMAjG6JNW5NK1qi1H8mwQdHRtVtQCfWXmAdk/s500/2.jpg" 
                   roundedCircle 
                   className="mx-auto mb-3" 
                   width={150}
                   height={150}
                 />
                 <Card.Body>
-                  <h5>Michael Chen</h5>
+                  <h5>Chetan Baliga</h5>
                   <p className="text-muted">Pastry Chef</p>
                   <p className="small">
                     "Every pastry tells a story of tradition and innovation."
@@ -137,14 +137,14 @@ const AboutUs = () => {
             <Col md={4} className="mb-4">
               <Card className="border-0 text-center">
                 <Image 
-                  src="https://randomuser.me/api/portraits/women/68.jpg" 
+                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi468cThYnKLpd4yP_fvi7A1UkTBhe1aRsUCaNHwCdVUY9uE-hYxTAZNRyF-GEMjDFdSxYsOLEleoemGksNFqrD2WUM1xg0TEvyzP9ig2FYV5qBOd6qqgtJV_YwElks7VO2t3iUdyoZH3NSzZlBwCmoZROB_11gPFqj4yoE8kQO2L72pQxbLL84rG7mKdk/s500/3.jpg" 
                   roundedCircle 
                   className="mx-auto mb-3" 
                   width={150}
                   height={150}
                 />
                 <Card.Body>
-                  <h5>Emma Rodriguez</h5>
+                  <h5>Shashwath Karkera</h5>
                   <p className="text-muted">Manager</p>
                   <p className="small">
                     "Making Ideal Café feel like home for everyone."

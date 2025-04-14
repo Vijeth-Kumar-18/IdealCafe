@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Carousel, Card, Container, Row, Col, Button, Badge } from 'react-bootstrap';
-import { StarFill, ClockFill, GiftFill } from 'react-bootstrap-icons';
+import React, { useState} from 'react';
+import { Card, Container, Row, Col, Button, Badge } from 'react-bootstrap';
+import { StarFill, GiftFill, ClockFill } from 'react-bootstrap-icons';
+import IceCreamCarousel from '../components/Carousel';
 
 const Home = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [todaysSpecial] = useState({
     name: "Butterscotch Bliss",
     description: "A creamy delight with caramel and crunchy nuts",
     price: "₹129",
     discountPrice: "₹99",
-    image: "butterscotch-bliss.jpg",
+    image: "https://images.pexels.com/photos/7091585/pexels-photo-7091585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     rating: 4.8
   });
 
@@ -19,7 +19,7 @@ const Home = () => {
       name: "Gadbad Ice Cream",
       description: "The timeless Mangalore classic with layers of flavors!",
       price: "₹149",
-      image: "gadbad.jpg",
+      image: "https://b.zmtcdn.com/data/pictures/chains/0/19238530/f8b03ea29b26f1385f2aafccaa1eabb5.jpg",
       rating: 4.9,
       featured: true,
       tags: ["Bestseller", "Local Favorite"]
@@ -29,7 +29,7 @@ const Home = () => {
       name: "Chocolate Delight",
       description: "Rich, creamy chocolate indulgence with fudge swirls",
       price: "₹139",
-      image: "chocolate-delight.jpg",
+      image: "https://images.pexels.com/photos/3026810/pexels-photo-3026810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       rating: 4.7,
       tags: ["Chocolate Lover"]
     },
@@ -38,7 +38,7 @@ const Home = () => {
       name: "Mango Magic",
       description: "Made from the finest Alphonso mangoes, seasonal special",
       price: "₹159",
-      image: "mango-magic.jpg",
+      image: "https://images.unsplash.com/photo-1591677445540-08028eeb3021?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       rating: 4.8,
       tags: ["Seasonal", "Fruity"]
     }
@@ -88,14 +88,6 @@ const Home = () => {
     }
   ]);
 
-  // Auto-rotate carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   const renderRatingStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -112,93 +104,8 @@ const Home = () => {
 
   return (
     <Container fluid className="px-0">
-      {/* Hero Banner with animated indicators */}
-      <Carousel 
-        activeIndex={activeIndex} 
-        onSelect={setActiveIndex}
-        fade
-        indicators={false}
-        controls={false}
-        className="mb-5"
-        style={{
-          height: "70vh",
-          overflow: "hidden"
-        }}
-      >
-        <Carousel.Item style={{ height: "70vh" }}>
-          <div 
-            className="d-block w-100 h-100"
-            style={{
-              backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner1.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center"
-            }}
-          >
-            <Carousel.Caption className="d-flex flex-column justify-content-center h-100" style={{ top: 0 }}>
-              <h1 className="display-4 fw-bold text-warning mb-3">Award-Winning Flavors</h1>
-              <p className="lead text-light mb-4">Explore our famous ice creams, loved by all!</p>
-              <Button variant="warning" size="lg" className="align-self-center px-4 py-2">
-                Discover More
-              </Button>
-            </Carousel.Caption>
-          </div>
-        </Carousel.Item>
-        <Carousel.Item style={{ height: "70vh" }}>
-          <div 
-            className="d-block w-100 h-100"
-            style={{
-              backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner2.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center"
-            }}
-          >
-            <Carousel.Caption className="d-flex flex-column justify-content-center h-100" style={{ top: 0 }}>
-              <h1 className="display-4 fw-bold text-warning mb-3">Seasonal Specials</h1>
-              <p className="lead text-light mb-4">Don't miss our exclusive summer flavors!</p>
-              <Button variant="warning" size="lg" className="align-self-center px-4 py-2">
-                Limited Time Offer
-              </Button>
-            </Carousel.Caption>
-          </div>
-        </Carousel.Item>
-        <Carousel.Item style={{ height: "70vh" }}>
-          <div 
-            className="d-block w-100 h-100"
-            style={{
-              backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner3.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center"
-            }}
-          >
-            <Carousel.Caption className="d-flex flex-column justify-content-center h-100" style={{ top: 0 }}>
-              <h1 className="display-4 fw-bold text-warning mb-3">Indulge Yourself</h1>
-              <p className="lead text-light mb-4">Treat yourself with our irresistible desserts!</p>
-              <Button variant="warning" size="lg" className="align-self-center px-4 py-2">
-                Order Now
-              </Button>
-            </Carousel.Caption>
-          </div>
-        </Carousel.Item>
-      </Carousel>
-
-      {/* Custom indicators */}
-      <div className="d-flex justify-content-center mb-5">
-        {[0, 1, 2].map((index) => (
-          <Button
-            key={index}
-            variant="link"
-            onClick={() => setActiveIndex(index)}
-            className="p-0 mx-2"
-            style={{
-              width: "12px",
-              height: "12px",
-              borderRadius: "50%",
-              backgroundColor: activeIndex === index ? "#ffc107" : "#6c757d",
-              border: "none"
-            }}
-          />
-        ))}
-      </div>
+      {/* Ice Cream Carousel Component */}
+      <IceCreamCarousel />
 
       {/* Popular Dishes with hover effects */}
       <Container>

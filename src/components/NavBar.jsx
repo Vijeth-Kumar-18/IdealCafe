@@ -18,7 +18,7 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-nav">
      
           <Nav className="me-auto">
-            <Nav.Link href="/" className="text-light mx-2 px-2 py-2 nav-link-hover" active>
+            <Nav.Link href="/" className="text-light mx-2 px-2 py-2 nav-link-hover" >
               Home
             </Nav.Link>
             <Nav.Link href="/menu" className="text-light mx-2 px-2 py-2 nav-link-hover">
@@ -59,7 +59,7 @@ const NavBar = () => {
           
           <Nav className="ms-auto">
             <Nav.Link href="/contact-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
-              Contact
+              Contact Us
             </Nav.Link>
             <Nav.Link href="/about-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
               About Us
