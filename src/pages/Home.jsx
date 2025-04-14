@@ -1,34 +1,370 @@
-import React from 'react';
-import { Carousel, Card, Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Carousel, Card, Container, Row, Col, Button, Badge } from 'react-bootstrap';
+import { StarFill, ClockFill, GiftFill } from 'react-bootstrap-icons';
 
 const Home = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [todaysSpecial] = useState({
+    name: "Butterscotch Bliss",
+    description: "A creamy delight with caramel and crunchy nuts",
+    price: "₹129",
+    discountPrice: "₹99",
+    image: "butterscotch-bliss.jpg",
+    rating: 4.8
+  });
+
+  const [popularDishes] = useState([
+    {
+      id: 1,
+      name: "Gadbad Ice Cream",
+      description: "The timeless Mangalore classic with layers of flavors!",
+      price: "₹149",
+      image: "gadbad.jpg",
+      rating: 4.9,
+      featured: true,
+      tags: ["Bestseller", "Local Favorite"]
+    },
+    {
+      id: 2,
+      name: "Chocolate Delight",
+      description: "Rich, creamy chocolate indulgence with fudge swirls",
+      price: "₹139",
+      image: "chocolate-delight.jpg",
+      rating: 4.7,
+      tags: ["Chocolate Lover"]
+    },
+    {
+      id: 3,
+      name: "Mango Magic",
+      description: "Made from the finest Alphonso mangoes, seasonal special",
+      price: "₹159",
+      image: "mango-magic.jpg",
+      rating: 4.8,
+      tags: ["Seasonal", "Fruity"]
+    }
+  ]);
+
+  const [testimonials] = useState([
+    {
+      id: 1,
+      text: "The Gadbad Ice Cream is a game-changer! The flavors are heavenly!",
+      rating: 5,
+      author: "Aditi",
+      location: "Bangalore",
+      date: "2 days ago"
+    },
+    {
+      id: 2,
+      text: "I love the seasonal specials, especially the Mango Magic. Always fresh!",
+      rating: 5,
+      author: "Ramesh",
+      location: "Mangalore",
+      date: "1 week ago"
+    },
+    {
+      id: 3,
+      text: "Ideal Café never disappoints. Their Chocolate Delight is my favorite!",
+      rating: 5,
+      author: "Priya",
+      location: "Udupi",
+      date: "3 days ago"
+    }
+  ]);
+
+  const [offers] = useState([
+    {
+      id: 1,
+      title: "Happy Hours",
+      description: "20% off on all orders from 4 PM to 6 PM!",
+      icon: <ClockFill className="text-warning" size={24} />,
+      validUntil: "Ongoing"
+    },
+    {
+      id: 2,
+      title: "Seasonal Treat",
+      description: "Get Mango Magic at just ₹99 this summer!",
+      icon: <GiftFill className="text-warning" size={24} />,
+      validUntil: "Until Aug 31"
+    }
+  ]);
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const renderRatingStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <StarFill 
+          key={i} 
+          className={i <= Math.floor(rating) ? "text-warning" : "text-secondary"} 
+          style={{ marginRight: 2 }}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
-    <Container>
-      {/* Hero Banner */}
-      <Carousel>
-        <Carousel.Item>
-          <img className="d-block w-100" src="banner1.jpg" alt="First slide" />
-          <Carousel.Caption>
-            <h3>Award-Winning Flavors</h3>
-            <p>Explore our famous ice creams!</p>
-          </Carousel.Caption>
+    <Container fluid className="px-0">
+      {/* Hero Banner with animated indicators */}
+      <Carousel 
+        activeIndex={activeIndex} 
+        onSelect={setActiveIndex}
+        fade
+        indicators={false}
+        controls={false}
+        className="mb-5"
+        style={{
+          height: "70vh",
+          overflow: "hidden"
+        }}
+      >
+        <Carousel.Item style={{ height: "70vh" }}>
+          <div 
+            className="d-block w-100 h-100"
+            style={{
+              backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner1.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center"
+            }}
+          >
+            <Carousel.Caption className="d-flex flex-column justify-content-center h-100" style={{ top: 0 }}>
+              <h1 className="display-4 fw-bold text-warning mb-3">Award-Winning Flavors</h1>
+              <p className="lead text-light mb-4">Explore our famous ice creams, loved by all!</p>
+              <Button variant="warning" size="lg" className="align-self-center px-4 py-2">
+                Discover More
+              </Button>
+            </Carousel.Caption>
+          </div>
         </Carousel.Item>
-        {/* Add more slides */}
+        <Carousel.Item style={{ height: "70vh" }}>
+          <div 
+            className="d-block w-100 h-100"
+            style={{
+              backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner2.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center"
+            }}
+          >
+            <Carousel.Caption className="d-flex flex-column justify-content-center h-100" style={{ top: 0 }}>
+              <h1 className="display-4 fw-bold text-warning mb-3">Seasonal Specials</h1>
+              <p className="lead text-light mb-4">Don't miss our exclusive summer flavors!</p>
+              <Button variant="warning" size="lg" className="align-self-center px-4 py-2">
+                Limited Time Offer
+              </Button>
+            </Carousel.Caption>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item style={{ height: "70vh" }}>
+          <div 
+            className="d-block w-100 h-100"
+            style={{
+              backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner3.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center"
+            }}
+          >
+            <Carousel.Caption className="d-flex flex-column justify-content-center h-100" style={{ top: 0 }}>
+              <h1 className="display-4 fw-bold text-warning mb-3">Indulge Yourself</h1>
+              <p className="lead text-light mb-4">Treat yourself with our irresistible desserts!</p>
+              <Button variant="warning" size="lg" className="align-self-center px-4 py-2">
+                Order Now
+              </Button>
+            </Carousel.Caption>
+          </div>
+        </Carousel.Item>
       </Carousel>
 
-      {/* Popular Dishes */}
-      <Row className="my-5">
-        <Col>
-          <Card>
-            <Card.Img variant="top" src="gadbad.jpg" />
-            <Card.Body>
-              <Card.Title>Gadbad Ice Cream</Card.Title>
-              <Card.Text>A must-try classic from Mangalore.</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        {/* Add more cards */}
-      </Row>
+      {/* Custom indicators */}
+      <div className="d-flex justify-content-center mb-5">
+        {[0, 1, 2].map((index) => (
+          <Button
+            key={index}
+            variant="link"
+            onClick={() => setActiveIndex(index)}
+            className="p-0 mx-2"
+            style={{
+              width: "12px",
+              height: "12px",
+              borderRadius: "50%",
+              backgroundColor: activeIndex === index ? "#ffc107" : "#6c757d",
+              border: "none"
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Popular Dishes with hover effects */}
+      <Container>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2 className="fw-bold mb-0">Our Signature Creations</h2>
+          <Button variant="outline-warning">View All</Button>
+        </div>
+        
+        <Row className="g-4 mb-5">
+          {popularDishes.map((dish) => (
+            <Col key={dish.id} md={4}>
+              <Card className="h-100 border-0 shadow-sm overflow-hidden" style={{ transition: "transform 0.3s" }}>
+                <div style={{ height: "200px", overflow: "hidden" }}>
+                  <Card.Img 
+                    variant="top" 
+                    src={dish.image} 
+                    className="w-100 h-100 object-fit-cover"
+                    style={{ transition: "transform 0.5s" }}
+                  />
+                </div>
+                <Card.Body className="position-relative">
+                  {dish.featured && (
+                    <Badge pill bg="danger" className="position-absolute top-0 start-0 translate-middle">
+                      Hot
+                    </Badge>
+                  )}
+                  <div className="d-flex justify-content-between align-items-start mb-2">
+                    <Card.Title className="mb-0">{dish.name}</Card.Title>
+                    <Badge bg="light" text="dark" className="fs-6">
+                      {dish.price}
+                    </Badge>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    {renderRatingStars(dish.rating)}
+                    <small className="text-muted ms-2">{dish.rating}</small>
+                  </div>
+                  <Card.Text className="text-muted mb-3">{dish.description}</Card.Text>
+                  <div className="d-flex flex-wrap gap-2 mb-3">
+                    {dish.tags?.map((tag, i) => (
+                      <Badge key={i} pill bg="light" text="dark">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <Button variant="warning" className="w-100 py-2">
+                    Add to Cart
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Customer Testimonials with cards */}
+        <h2 className="fw-bold mb-4">What Our Customers Say</h2>
+        <Row className="g-4 mb-5">
+          {testimonials.map((testimonial) => (
+            <Col key={testimonial.id} md={4}>
+              <Card className="h-100 border-0 shadow-sm">
+                <Card.Body className="d-flex flex-column">
+                  <blockquote className="blockquote mb-4 flex-grow-1">
+                    <p className="font-italic">"{testimonial.text}"</p>
+                  </blockquote>
+                  <div className="d-flex justify-content-between align-items-end">
+                    <div>
+                      <footer className="blockquote-footer mb-1">
+                        {testimonial.author}, <cite>{testimonial.location}</cite>
+                      </footer>
+                      <small className="text-muted">{testimonial.date}</small>
+                    </div>
+                    <div className="d-flex">
+                      {renderRatingStars(testimonial.rating)}
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Exclusive Offers with icons */}
+        <h2 className="fw-bold mb-4">Exclusive Offers</h2>
+        <Row className="g-4 mb-5">
+          {offers.map((offer) => (
+            <Col key={offer.id} md={6}>
+              <Card className="h-100 border-0 shadow-sm">
+                <Card.Body className="d-flex align-items-center">
+                  <div className="me-4">
+                    {offer.icon}
+                  </div>
+                  <div>
+                    <Card.Title className="mb-1">{offer.title}</Card.Title>
+                    <Card.Text className="mb-1">{offer.description}</Card.Text>
+                    <small className="text-muted">Valid: {offer.validUntil}</small>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Ice Cream of the Day with ribbon */}
+        <h2 className="fw-bold mb-4">Today's Special</h2>
+        <Card className="border-0 shadow-sm overflow-hidden mb-5">
+          <Row className="g-0">
+            <Col md={6}>
+              <div style={{ height: "300px", overflow: "hidden" }}>
+                <Card.Img 
+                  src={todaysSpecial.image} 
+                  className="w-100 h-100 object-fit-cover"
+                />
+              </div>
+            </Col>
+            <Col md={6}>
+              <Card.Body className="h-100 d-flex flex-column justify-content-center p-4">
+                <div className="position-relative">
+                  <Badge pill bg="danger" className="position-absolute top-0 start-0 translate-middle">
+                    Today Only
+                  </Badge>
+                  <Card.Title className="display-6 mb-3">{todaysSpecial.name}</Card.Title>
+                  <div className="d-flex align-items-center mb-3">
+                    {renderRatingStars(todaysSpecial.rating)}
+                    <small className="text-muted ms-2">{todaysSpecial.rating} (128 reviews)</small>
+                  </div>
+                  <Card.Text className="lead mb-4">{todaysSpecial.description}</Card.Text>
+                  <div className="d-flex align-items-center mb-4">
+                    <span className="fs-3 fw-bold text-warning me-2">{todaysSpecial.discountPrice}</span>
+                    <span className="text-decoration-line-through text-muted">{todaysSpecial.price}</span>
+                    <Badge bg="success" className="ms-2">Save 23%</Badge>
+                  </div>
+                  <div className="d-grid gap-3">
+                    <Button variant="warning" size="lg" className="py-2">
+                      Order Now
+                    </Button>
+                    <Button variant="outline-secondary" size="lg" className="py-2">
+                      Add to Wishlist
+                    </Button>
+                  </div>
+                </div>
+              </Card.Body>
+            </Col>
+          </Row>
+        </Card>
+      </Container>
+
+      {/* Newsletter Section */}
+      <div className="bg-light py-5">
+        <Container>
+          <Row className="justify-content-center">
+            <Col md={8} className="text-center">
+              <h2 className="fw-bold mb-3">Join Our Sweet Community</h2>
+              <p className="lead mb-4">Subscribe to get exclusive offers, new flavor alerts, and sweet surprises!</p>
+              <div className="d-flex">
+                <input 
+                  type="email" 
+                  className="form-control form-control-lg rounded-0 rounded-start" 
+                  placeholder="Your email address" 
+                />
+                <Button variant="warning" className="rounded-0 rounded-end px-4">
+                  Subscribe
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </Container>
   );
 };
