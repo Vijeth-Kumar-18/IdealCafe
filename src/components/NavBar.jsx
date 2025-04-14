@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from 'react-bootstrap';
+import { Navbar, Nav,  Form, FormControl, Button, Container } from 'react-bootstrap';
 import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa';
 
 const NavBar = () => {
@@ -19,10 +19,11 @@ const NavBar = () => {
           <Nav className="me-auto">
             <Nav.Link href="/" className="text-light fw-semibold mx-2">Home</Nav.Link>
             <Nav.Link href="/menu" className="text-light fw-semibold mx-2">Menu</Nav.Link>
-            <NavDropdown title="Offers" className="text-light fw-semibold mx-2">
+            <Nav.Link href="/offers" className="text-light fw-semibold mx-2">Offers</Nav.Link>
+            {/* <NavDropdown title="Offers" className="text-light fw-semibold mx-2">
               <NavDropdown.Item href="/offers/seasonal">Seasonal Specials</NavDropdown.Item>
-              <NavDropdown.Item href="/offers/happy-hours">Happy Hours</NavDropdown.Item>
-            </NavDropdown>
+              <NavDropdown.Item href="/offers/happy-hours">Happy Hours</NavDropdown.Item> */}
+            {/* </NavDropdown> */}
             <Nav.Link href="/locations" className="text-light fw-semibold mx-2">Locations</Nav.Link>
             <Nav.Link href="/contact-us" className="text-light fw-semibold mx-2">Contact Us</Nav.Link>
           </Nav>
