@@ -29,7 +29,7 @@ const Cart = () => {
       name: 'Gadbad Ice Cream', 
       price: 150, 
       quantity: 1,
-      image: 'gadbad.jpg',
+      image: 'https://images.pexels.com/photos/1146758/pexels-photo-1146758.jpeg?auto=compress&cs=tinysrgb&w=600',
       description: 'Classic Mangalorean special with layers of flavors'
     },
     { 
@@ -37,7 +37,7 @@ const Cart = () => {
       name: 'Chocolate Shake', 
       price: 100, 
       quantity: 2,
-      image: 'chocolate-shake.jpg',
+      image: 'https://images.pexels.com/photos/1582628/pexels-photo-1582628.jpeg?auto=compress&cs=tinysrgb&w=600',
       description: 'Rich chocolatey goodness with ice cream'
     },
   ]);
