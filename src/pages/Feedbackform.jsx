@@ -106,7 +106,7 @@ const FeedbackForm = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-4">
-                  <Form.Label><Person className="me-2" />Name (Optional)</Form.Label>
+                  <Form.Label><Person className="me-2" />Name </Form.Label>
                   <Form.Control
                     type="text"
                     name="name"
@@ -117,7 +117,7 @@ const FeedbackForm = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-4">
-                  <Form.Label><Envelope className="me-2" />Email (Optional)</Form.Label>
+                  <Form.Label><Envelope className="me-2" />Email </Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
