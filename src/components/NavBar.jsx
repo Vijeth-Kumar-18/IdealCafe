@@ -6,17 +6,17 @@ const NavBar = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="shadow-lg sticky-top py-2">
       <Container fluid="lg">
-        {/* Brand Logo */}
+       
         <Navbar.Brand href="/" className="d-flex align-items-center">
           <span className="fw-bold text-white fs-4">Ideal {' '}</span>
           <span className="fw-bold text-warning fs-4">Café</span>
         </Navbar.Brand>
         
-        {/* Mobile Toggle */}
+       
         <Navbar.Toggle aria-controls="navbar-nav" className="border-0" />
         
         <Navbar.Collapse id="navbar-nav">
-          {/* Main Navigation Links */}
+     
           <Nav className="me-auto">
             <Nav.Link href="/" className="text-light mx-2 px-2 py-2 nav-link-hover" active>
               Home
@@ -33,9 +33,11 @@ const NavBar = () => {
             <Nav.Link href="/cart" className="text-light mx-2 px-2 py-2 nav-link-hover">
             Cart
             </Nav.Link>
+            <Nav.Link href="/locations" className="text-light mx-2 px-2 py-2 nav-link-hover">
+            Location </Nav.Link>
           </Nav>
-
-          {/* Search Bar - Center Position */}
+              
+         
           <Form className="d-flex my-2 my-lg-0 mx-lg-4">
             <div className="input-group">
               <FormControl
@@ -54,7 +56,7 @@ const NavBar = () => {
             </div>
           </Form>
 
-          {/* Right-side Links */}
+          
           <Nav className="ms-auto">
             <Nav.Link href="/contact-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
               Contact
@@ -69,7 +71,7 @@ const NavBar = () => {
         </Navbar.Collapse>
       </Container>
 
-      {/* Custom CSS */}
+      
       <style jsx>{`
         .nav-link-hover:hover {
           color: var(--bs-warning) !important;
