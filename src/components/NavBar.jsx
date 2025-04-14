@@ -8,6 +8,13 @@ const NavBar = () => {
       <Container fluid="lg">
        
         <Navbar.Brand href="/" className="d-flex align-items-center">
+        <img
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxyy9JmsmVFJpn8RTshVss315Npg15ZrrAXtrPkcwtRf0iB8lR__h3oVpAEDzQsQwyJ8qKb5OjNrvPYxDZOQ0USJDo4rheChs0CZUtbeEaio3HISXbKDlRT9DUjEOjJUA5QMfNOXu28dTjpLjxfmgDPOqasgS5FPYmRP0wqF0LYoi2bi21wYAFIJtuYac/s500/ideal2.png" // Path to your logo in the public folder
+            alt="Ideal Cafe Logo"
+            width="40"
+            height="40"
+            className="d-inline-block align-top me-2"
+          />
           <span className="fw-bold text-white fs-4">Ideal {' '}</span>
           <span className="fw-bold text-warning fs-4">Café</span>
         </Navbar.Brand>
