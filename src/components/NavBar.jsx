@@ -1,57 +1,92 @@
 import React from 'react';
-import { Navbar, Nav,  Form, FormControl, Button, Container } from 'react-bootstrap';
-import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa';
+import { Navbar, Nav, Form, FormControl, Button, Container } from 'react-bootstrap';
+import { FaSearch, FaUser } from 'react-icons/fa';
 
 const NavBar = () => {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="shadow-lg sticky-top">
-      <Container>
+    <Navbar bg="dark" variant="dark" expand="lg" className="shadow-lg sticky-top py-2">
+      <Container fluid="lg">
         {/* Brand Logo */}
-        <Navbar.Brand href="/" className="fw-bold text-warning">
-          🍨 Ideal Café
+        <Navbar.Brand href="/" className="d-flex align-items-center">
+          <span className="fw-bold text-white fs-4">Ideal {' '}</span>
+          <span className="fw-bold text-warning fs-4">Café</span>
         </Navbar.Brand>
         
-        {/* Toggle Button for Mobile */}
-        <Navbar.Toggle aria-controls="navbar-nav" />
+        {/* Mobile Toggle */}
+        <Navbar.Toggle aria-controls="navbar-nav" className="border-0" />
         
         <Navbar.Collapse id="navbar-nav">
-          {/* Navigation Links */}
+          {/* Main Navigation Links */}
           <Nav className="me-auto">
-            <Nav.Link href="/" className="text-light fw-semibold mx-2">Home</Nav.Link>
-            <Nav.Link href="/menu" className="text-light fw-semibold mx-2">Menu</Nav.Link>
-            <Nav.Link href="/offers" className="text-light fw-semibold mx-2">Offers</Nav.Link>
-            {/* <NavDropdown title="Offers" className="text-light fw-semibold mx-2">
-              <NavDropdown.Item href="/offers/seasonal">Seasonal Specials</NavDropdown.Item>
-              <NavDropdown.Item href="/offers/happy-hours">Happy Hours</NavDropdown.Item> */}
-            {/* </NavDropdown> */}
-            <Nav.Link href="/locations" className="text-light fw-semibold mx-2">Locations</Nav.Link>
-            <Nav.Link href="/contact-us" className="text-light fw-semibold mx-2">Contact Us</Nav.Link>
+            <Nav.Link href="/" className="text-light mx-2 px-2 py-2 nav-link-hover" active>
+              Home
+            </Nav.Link>
+            <Nav.Link href="/menu" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              Menu
+            </Nav.Link>
+            <Nav.Link href="/offers" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              Offers
+            </Nav.Link>
+            <Nav.Link href="/checkout" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              Checkout
+            </Nav.Link>
+            <Nav.Link href="/cart" className="text-light mx-2 px-2 py-2 nav-link-hover">
+            Cart
+            </Nav.Link>
           </Nav>
-          
-          {/* Right-Side Features */}
-          <Form className="d-flex align-items-center">
-            {/* Search Bar */}
-            <FormControl
-              type="text"
-              placeholder="Search Ice Creams..."
-              className="rounded-pill me-2"
-            />
-            <Button variant="outline-warning" className="rounded-pill px-4">
-              <FaSearch /> Search
-            </Button>
+
+          {/* Search Bar - Center Position */}
+          <Form className="d-flex my-2 my-lg-0 mx-lg-4">
+            <div className="input-group">
+              <FormControl
+                type="search"
+                placeholder="Search menu..."
+                aria-label="Search"
+                className="rounded-start-pill border-end-0 bg-dark text-light"
+              />
+              <Button 
+                variant="warning" 
+                className="rounded-end-pill border-start-0 px-3"
+                type="submit"
+              >
+                <FaSearch />
+              </Button>
+            </div>
           </Form>
 
-          {/* Cart and User Icons */}
-          <Nav className="ms-auto d-flex align-items-center">
-            <Nav.Link href="/cart" className="text-light mx-2">
-              <FaShoppingCart size={20} /> Cart
+          {/* Right-side Links */}
+          <Nav className="ms-auto">
+            <Nav.Link href="/contact-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              Contact
             </Nav.Link>
-            <Nav.Link href="/login" className="text-light mx-2">
-              <FaUser size={20} /> Sign In
+            <Nav.Link href="/about" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              About
+            </Nav.Link>
+            <Nav.Link href="/sign-up" className="text-light mx-2 px-2 py-2 nav-link-hover">
+              <FaUser size={16} className="me-1" /> Sign Up
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
+
+      {/* Custom CSS */}
+      <style jsx>{`
+        .nav-link-hover:hover {
+          color: var(--bs-warning) !important;
+        }
+        .navbar-nav .nav-link.active {
+          color: var(--bs-warning) !important;
+          font-weight: 600;
+        }
+        .input-group .form-control:focus {
+          box-shadow: none;
+          border-color: var(--bs-warning);
+        }
+        .input-group .btn:hover {
+          background-color: var(--bs-warning);
+          border-color: var(--bs-warning);
+        }
+      `}</style>
     </Navbar>
   );
 };
