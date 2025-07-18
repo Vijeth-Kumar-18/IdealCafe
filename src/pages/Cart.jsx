@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Container, 
   Row, 
@@ -23,24 +23,18 @@ import {
 } from 'react-bootstrap-icons';
 
 const Cart = () => {
-  const [cart, setCart] = useState([
-    { 
-      id: 1,
-      name: 'Gadbad Ice Cream', 
-      price: 150, 
-      quantity: 1,
-      image: 'https://images.pexels.com/photos/1146758/pexels-photo-1146758.jpeg?auto=compress&cs=tinysrgb&w=600',
-      description: 'Classic Mangalorean special with layers of flavors'
-    },
-    { 
-      id: 2,
-      name: 'Chocolate Shake', 
-      price: 100, 
-      quantity: 2,
-      image: 'https://images.pexels.com/photos/1582628/pexels-photo-1582628.jpeg?auto=compress&cs=tinysrgb&w=600',
-      description: 'Rich chocolatey goodness with ice cream'
-    },
-  ]);
+  const [cart, setCart] = useState(() => {
+    return JSON.parse(localStorage.getItem('cart') || '[]');
+  });
+
+  // Sync cart with localStorage
+  useEffect(() => {
+    const syncCart = () => {
+      setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
+    };
+    window.addEventListener('storage', syncCart);
+    return () => window.removeEventListener('storage', syncCart);
+  }, []);
 
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -52,17 +46,25 @@ const Cart = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
 
   const handleQuantityChange = (id, delta) => {
-    setCart(prevCart => 
-      prevCart.map(item => 
-        item.id === id 
+    setCart(prevCart => {
+      const updated = prevCart.map(item =>
+        item.id === id
           ? { ...item, quantity: Math.max(1, item.quantity + delta) }
           : item
-      ).filter(item => item.quantity > 0)
-    );
+      ).filter(item => item.quantity > 0);
+      localStorage.setItem('cart', JSON.stringify(updated));
+      window.dispatchEvent(new Event('storage'));
+      return updated;
+    });
   };
 
   const removeItem = (id) => {
-    setCart(prevCart => prevCart.filter(item => item.id !== id));
+    setCart(prevCart => {
+      const updated = prevCart.filter(item => item.id !== id);
+      localStorage.setItem('cart', JSON.stringify(updated));
+      window.dispatchEvent(new Event('storage'));
+      return updated;
+    });
   };
 
   const handleInputChange = (e) => {
@@ -75,6 +77,8 @@ const Cart = () => {
     // In a real app, you would send this data to your backend
     console.log('Order submitted:', { cart, customerInfo });
     setOrderPlaced(true);
+    localStorage.removeItem('cart');
+    window.dispatchEvent(new Event('storage'));
   };
 
   const totalCost = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);

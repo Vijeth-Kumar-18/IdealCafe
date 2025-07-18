@@ -43,7 +43,7 @@ const Locations = () => {
     {
       name: 'Ideal Café - Udupi',
       address: 'Car Street, Near Krishna Temple, Udupi',
-      contact: '0820-789456',
+      contact: '0820-123456',
       hours: '7:30 AM - 10:00 PM',
       delivery: false,
       new: true,

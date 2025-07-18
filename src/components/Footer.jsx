@@ -37,7 +37,7 @@ const Footer = () => {
               <i className="bi bi-geo-alt-fill me-2"></i>Main Road, Mangalore, Karnataka 575001
             </p>
             <p>
-              <i className="bi bi-telephone-fill me-2"></i>+91 9876543210
+              <i className="bi bi-telephone-fill me-2"></i>+91 12345 67890
             </p>
           </Col>
         </Row>

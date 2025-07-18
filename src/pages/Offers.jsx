@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {
   Container,
   Row,
@@ -381,54 +381,133 @@ const Offers = () => {
             <X size={24} />
           </Button>
         </Modal.Header>
-        <Modal.Body className="text-center py-4" style={{ background: '#FFF5F5' }}>
-          <div className="wheel-container">
-            <div className="wheel-decoration"></div>
-            <div className="ice-cream-icon"></div>
-            <div className="wheel-pointer" />
-            <div
-              className="spin-wheel"
-              ref={wheelRef}
-            >
-              <div className="wheel-inner">
+        <Modal.Body className="py-4" style={{ background: '#FFF5F5' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            {/* Pointer */}
+            <div style={{ position: 'relative', width: 320, height: 24, marginBottom: -12, zIndex: 2 }}>
+              <div style={{
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                transform: 'translateX(-50%)',
+                width: 0,
+                height: 0,
+                borderLeft: '18px solid transparent',
+                borderRight: '18px solid transparent',
+                borderBottom: '32px solid #FF6B6B',
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.12))'
+              }} />
+            </div>
+            {/* Wheel */}
+            <div style={{ position: 'relative', width: 320, height: 320, margin: '0 auto' }}>
+              <div
+                ref={wheelRef}
+                style={{
+                  width: 320,
+                  height: 320,
+                  borderRadius: '50%',
+                  border: '8px solid #FF9E9E',
+                  boxShadow: '0 4px 32px 0 rgba(255,107,107,0.10)',
+                  background: `conic-gradient(${segments.map((label, i) => {
+                    const colors = [
+                      '#FF6B6B', '#FF8E8E', '#FFB3B3', '#FFD166',
+                      '#FFDD80', '#FFE9A0', '#06D6A0', '#48BFE3'
+                    ];
+                    return `${colors[i % colors.length]} ${(i * 360 / segments.length)}deg ${(i + 1) * 360 / segments.length}deg`;
+                  }).join(', ')})`,
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  transition: 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)'
+                }}
+              >
                 {segments.map((label, i) => {
-                  const rotate = (360 / segments.length) * i;
-                  const colors = [
-                    '#FF6B6B', '#FF8E8E', '#FFB3B3', 
-                    '#FFD166', '#FFDD80', '#FFE9A0',
-                    '#06D6A0', '#48BFE3'
-                  ];
+                  const segmentAngle = 360 / segments.length;
+                  // Center of the slice: add half a segment to the base angle
+                  const angle = (segmentAngle * i) + segmentAngle / 2;
+                  const radius = 110; // visually balanced
+                  const rad = (angle - 90) * (Math.PI / 180);
+                  const x = 160 + radius * Math.cos(rad);
+                  const y = 160 + radius * Math.sin(rad);
                   return (
                     <div
                       key={i}
-                      className="segment"
                       style={{
-                        backgroundColor: colors[i],
-                        transform: `rotate(${rotate}deg) skewY(${90 - (360/segments.length/2)}deg)`,
-                        border: '1px solid rgba(255,255,255,0.3)'
+                        position: 'absolute',
+                        left: x,
+                        top: y,
+                        width: 90,
+                        height: 38,
+                        marginLeft: -45,
+                        marginTop: -19,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'rgba(0,0,0,0.18)',
+                        borderRadius: 16,
+                        textAlign: 'center',
+                        color: '#fff',
+                        fontWeight: 700,
+                        fontSize: 17,
+                        letterSpacing: 0.5,
+                        textShadow: '1px 1px 8px rgba(0,0,0,0.22)',
+                        // Slightly slant the label for readability
+                        transform: `rotate(${-angle + 18}deg)`
                       }}
                     >
-                      <div className="segment-text">{label}</div>
+                      <span style={{ width: '100%', padding: '0 4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block' }}>{label}</span>
                     </div>
                   );
                 })}
-                <div className="wheel-shadow" />
-                <div className="wheel-center">
-                  <Gift size={24} />
+                {/* Center circle */}
+                <div style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 70,
+                  height: 70,
+                  borderRadius: '50%',
+                  background: '#fff',
+                  boxShadow: '0 2px 8px 0 rgba(255,107,107,0.10)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: 22,
+                  color: '#FF6B6B',
+                  border: '4px solid #FF6B6B',
+                  zIndex: 2
+                }}>
+                  <Gift size={32} />
                 </div>
               </div>
             </div>
-            
+            {/* Spin Button */}
             <button
-              className={`spin-button ${isSpinning ? 'is-spinning' : ''}`}
+              style={{
+                marginTop: 32,
+                padding: '14px 48px',
+                fontSize: 20,
+                fontWeight: 700,
+                borderRadius: 32,
+                background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)',
+                color: '#fff',
+                border: 'none',
+                boxShadow: '0 2px 12px 0 rgba(255,107,107,0.18)',
+                transition: 'all 0.2s',
+                opacity: isSpinning ? 0.7 : 1,
+                cursor: isSpinning ? 'not-allowed' : 'pointer',
+              }}
               onClick={spin}
               disabled={isSpinning}
             >
-              {isSpinning ? 'Spinning' : 'SPIN'}
-              {isSpinning && <span>Good luck!</span>}
+              {isSpinning ? 'Spinning...' : 'SPIN'}
             </button>
+            <div style={{ marginTop: 16, color: '#FF6B6B', fontWeight: 600, fontSize: 16 }}>
+              Spins left: {isSpinning ? '...' : '∞'}
+            </div>
           </div>
-          <p className="mt-3 text-muted">Spin the wheel to win amazing ice cream prizes!</p>
         </Modal.Body>
       </Modal>
 

@@ -102,6 +102,26 @@ const Home = () => {
     return stars;
   };
 
+  // Add to Cart handler
+  const handleAddToCart = (dish) => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find(item => item.id === dish.id);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        id: dish.id,
+        name: dish.name,
+        price: parseInt(dish.price.replace(/[^0-9]/g, '')),
+        image: dish.image,
+        description: dish.description,
+        quantity: 1
+      });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('storage'));
+  };
+
   return (
     <Container fluid className="px-0">
       {/* Ice Cream Carousel Component */}
@@ -150,7 +170,7 @@ const Home = () => {
                       </Badge>
                     ))}
                   </div>
-                  <Button variant="warning" className="w-100 py-2">
+                  <Button variant="warning" className="w-100 py-2" onClick={() => handleAddToCart(dish)}>
                     Add to Cart
                   </Button>
                 </Card.Body>

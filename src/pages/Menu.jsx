@@ -21,6 +21,25 @@ import {
 } from 'react-bootstrap-icons';
 
 const Menu = () => {
+  // Add to Cart handler
+  const handleAddToCart = (item) => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find(i => i.id === item.id);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.image,
+        description: item.description,
+        quantity: 1
+      });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('storage'));
+  };
   const [activeTab, setActiveTab] = useState('ice-creams');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -250,6 +269,7 @@ const Menu = () => {
                   <Button 
                     variant="outline-primary" 
                     className="mt-3"
+                    onClick={() => handleAddToCart(item)}
                   >
                     <CartPlus className="me-2" />
                     Add to Cart

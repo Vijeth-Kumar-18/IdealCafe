@@ -32,10 +32,19 @@ const Checkout = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [validated, setValidated] = useState(false);
 
-  const orderSummary = [
-    { id: 1, name: 'Gadbad Ice Cream', price: 150, quantity: 1, image: 'https://images.pexels.com/photos/1146758/pexels-photo-1146758.jpeg?auto=compress&cs=tinysrgb&w=600' },
-    { id: 2, name: 'Chocolate Shake', price: 100, quantity: 2, image: 'https://images.pexels.com/photos/1582628/pexels-photo-1582628.jpeg?auto=compress&cs=tinysrgb&w=600' }
-  ];
+  // Get cart from localStorage
+  const [orderSummary, setOrderSummary] = useState(() => {
+    return JSON.parse(localStorage.getItem('cart') || '[]');
+  });
+
+  // Keep orderSummary in sync with cart changes (if user changes cart in another tab)
+  React.useEffect(() => {
+    const syncCart = () => {
+      setOrderSummary(JSON.parse(localStorage.getItem('cart') || '[]'));
+    };
+    window.addEventListener('storage', syncCart);
+    return () => window.removeEventListener('storage', syncCart);
+  }, []);
 
   const totalCost = orderSummary.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const tax = totalCost * 0.05; // 5% tax

@@ -1,8 +1,56 @@
-import React from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container } from 'react-bootstrap';
-import { FaSearch, FaUser } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { Navbar, Nav, Form, FormControl, Button, Container, NavDropdown } from 'react-bootstrap';
+import { FaSearch, FaUser, FaSignOutAlt } from 'react-icons/fa';
+
+// CartCount component for showing cart item count
+function CartCount() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const updateCount = () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCount(cart.reduce((acc, item) => acc + item.quantity, 0));
+    };
+    updateCount();
+    window.addEventListener('storage', updateCount);
+    return () => window.removeEventListener('storage', updateCount);
+  }, []);
+  if (count === 0) return null;
+  return (
+    <span style={{background:'#ffc107',color:'#222',borderRadius:'50%',padding:'2px 7px',fontSize:'0.8rem',marginLeft:4}}>{count}</span>
+  );
+}
 
 const NavBar = () => {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    // Check if a user is logged in (simulate session)
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    // Optionally, you can store a 'currentUser' in localStorage on login for more robust session
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    if (currentUser) {
+      setLoggedInUser(currentUser);
+    } else if (users.length > 0) {
+      setLoggedInUser(null);
+    }
+  }, []);
+
+  // Listen for login/logout events (optional, for SPA feel)
+  useEffect(() => {
+    const onStorage = () => {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      setLoggedInUser(currentUser);
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setLoggedInUser(null);
+    window.location.reload();
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="shadow-lg sticky-top py-2">
       <Container fluid="lg">
@@ -37,8 +85,11 @@ const NavBar = () => {
             <Nav.Link href="/checkout" className="text-light mx-2 px-2 py-2 nav-link-hover">
               Checkout
             </Nav.Link>
-            <Nav.Link href="/cart" className="text-light mx-2 px-2 py-2 nav-link-hover">
-            Cart
+            <Nav.Link href="/cart" className="text-light mx-2 px-2 py-2 nav-link-hover position-relative">
+              Cart
+              <span id="cart-count-badge" style={{position:'absolute',top:2,right:0}}>
+                <CartCount />
+              </span>
             </Nav.Link>
             <Nav.Link href="/locations" className="text-light mx-2 px-2 py-2 nav-link-hover">
             Location </Nav.Link>
@@ -71,15 +122,32 @@ const NavBar = () => {
             <Nav.Link href="/about-us" className="text-light mx-2 px-2 py-2 nav-link-hover">
               About Us
             </Nav.Link>
-            <Nav.Link href="/sign-up" className="text-light mx-2 px-2 py-2 nav-link-hover">
-              <FaUser size={16} className="me-1" /> Sign Up
-            </Nav.Link>
+            {loggedInUser ? (
+              <NavDropdown
+                title={<span><FaUser className="me-1" /> {loggedInUser.name || 'Profile'}</span>}
+                id="user-nav-dropdown"
+                align="end"
+                className="mx-2"
+              >
+                <NavDropdown.Item disabled>
+                  <span className="fw-bold">{loggedInUser.email}</span>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout} style={{ color: '#dc3545' }}>
+                  <FaSignOutAlt className="me-2" /> Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link href="/sign-up" className="text-light mx-2 px-2 py-2 nav-link-hover">
+                <FaUser size={16} className="me-1" /> Sign Up
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
 
       
-      <style jsx>{`
+      <style>{`
         .nav-link-hover:hover {
           color: var(--bs-warning) !important;
         }

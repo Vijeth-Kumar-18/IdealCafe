@@ -94,7 +94,7 @@ const AboutUs = () => {
       </Row>
 
     
-      <Row className="mb-5">
+      {/* <Row className="mb-5">
         <Col>
           <h2 className="fw-bold text-center mb-5">Meet Our Team</h2>
           <Row>
@@ -154,7 +154,7 @@ const AboutUs = () => {
             </Col>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
 
    
       <Row className="bg-light py-5 rounded-3 text-center">

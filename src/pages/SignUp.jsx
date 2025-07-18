@@ -32,11 +32,12 @@ const Signup = () => {
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState('');
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [isLogin, setIsLogin] = useState(false);
 
+  // Password strength logic
   const handlePasswordChange = (e) => {
     const { value } = e.target;
     setFormData({ ...formData, password: value });
-    // Calculate password strength (simple example)
     let strength = 0;
     if (value.length > 0) strength += 20;
     if (value.length >= 8) strength += 20;
@@ -46,28 +47,58 @@ const Signup = () => {
     setPasswordStrength(strength);
   };
 
+  // Signup logic using localStorage
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    
     if (form.checkValidity() === false) {
       event.stopPropagation();
       setValidated(true);
       return;
     }
-
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match!');
       return;
     }
+    // Check if user already exists
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    if (users.some(u => u.email === formData.email)) {
+      setError('User already exists with this email. Please login.');
+      return;
+    }
+    // Save user
+    const newUser = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password
+    };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    // Set current user for session
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    setError('');
+    alert(`Welcome, ${formData.name}! Your account has been created.`);
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+    setPasswordStrength(0);
+    setIsLogin(true);
+    window.location.reload();
+  };
 
-    // Simulate signup API call
-    try {
-      console.log('Signup data:', formData);
+  // Login logic using localStorage
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.email === formData.email && u.password === formData.password);
+    if (user) {
       setError('');
-      alert(`Welcome, ${formData.name}! Your account has been created.`);
-    } catch (err) {
-      setError('Registration failed. Please try again.');
+      // Set current user for session
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      alert(`Welcome back, ${user.name}! You are now logged in.`);
+      setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+      setPasswordStrength(0);
+      window.location.reload();
+    } else {
+      setError('Invalid email or password.');
     }
   };
 
@@ -94,7 +125,25 @@ const Signup = () => {
                 </Alert>
               )}
 
-              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              {/* Toggle between Signup and Login forms */}
+              <div className="d-flex justify-content-center mb-3">
+                <Button
+                  variant={!isLogin ? 'primary' : 'outline-primary'}
+                  className="me-2"
+                  onClick={() => { setIsLogin(false); setError(''); }}
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  variant={isLogin ? 'primary' : 'outline-primary'}
+                  onClick={() => { setIsLogin(true); setError(''); }}
+                >
+                  Login
+                </Button>
+              </div>
+
+              {!isLogin ? (
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Full Name</Form.Label>
                   <InputGroup hasValidation>
@@ -225,6 +274,53 @@ const Signup = () => {
                   </a>
                 </div>
               </Form>
+              ) : (
+                <Form onSubmit={handleLogin}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email Address</Form.Label>
+                    <InputGroup hasValidation>
+                      <InputGroup.Text>
+                        <Envelope />
+                      </InputGroup.Text>
+                      <Form.Control
+                        type="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
+                      />
+                    </InputGroup>
+                  </Form.Group>
+                  <Form.Group className="mb-4">
+                    <Form.Label>Password</Form.Label>
+                    <InputGroup hasValidation>
+                      <InputGroup.Text>
+                        <Lock />
+                      </InputGroup.Text>
+                      <Form.Control
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        required
+                      />
+                      <InputGroup.Text 
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeSlash /> : <Eye />}
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Form.Group>
+                  <Button 
+                    variant="primary" 
+                    type="submit" 
+                    className="w-100 mb-3 py-2"
+                  >
+                    Login
+                  </Button>
+                </Form>
+              )}
             </Card.Body>
           </Card>
         </Col>
