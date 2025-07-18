@@ -2,19 +2,26 @@ import React from 'react';
 import { Container, Row, Col, Card, ListGroup, Image, Button } from 'react-bootstrap';
 import { FaCamera, FaEdit } from 'react-icons/fa';
 
-const ProfilePage = () => {
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    favorites: ['Vanilla Ice Cream', 'Chocolate Shake'],
-    orderHistory: [
-      { orderId: '123', items: ['Gadbad Ice Cream', 'Mango Ice Cream'], total: 250, date: '2023-05-15' },
-      { orderId: '124', items: ['Chocolate Shake', 'Brownie'], total: 300, date: '2023-05-20' },
-    ],
-  };
 
-  // Default profile image (can be replaced with user.photo if available)
+const ProfilePage = () => {
+  // Get user info from localStorage (set at signup/login)
+  const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+  // Fallbacks for demo if not logged in
   const defaultProfilePhoto = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  if (!user) {
+    return (
+      <Container className="py-4 text-center">
+        <h2>User not found</h2>
+        <p>Please log in to view your profile.</p>
+      </Container>
+    );
+  }
+  // Optionally, you can add favorites/orderHistory to user object if you persist them
+  const favorites = user.favorites || ['Vanilla Ice Cream', 'Chocolate Shake'];
+  const orderHistory = user.orderHistory || [
+    { orderId: '123', items: ['Gadbad Ice Cream', 'Mango Ice Cream'], total: 250, date: '2023-05-15' },
+    { orderId: '124', items: ['Chocolate Shake', 'Brownie'], total: 300, date: '2023-05-20' },
+  ];
 
   return (
     <Container className="py-4">
@@ -22,7 +29,7 @@ const ProfilePage = () => {
         <Col xs={12} className="text-center mb-4">
           <div className="position-relative d-inline-block">
             <Image 
-              src={defaultProfilePhoto} 
+              src={user.photo || defaultProfilePhoto} 
               roundedCircle 
               width={150}
               height={150}
@@ -38,7 +45,7 @@ const ProfilePage = () => {
               <FaCamera />
             </Button>
           </div>
-          <h2 className="mt-3">{user.name}</h2>
+          <h2 className="mt-3">{user.name || user.firstName || 'User'}</h2>
           <p className="text-muted">{user.email}</p>
         </Col>
       </Row>
@@ -55,7 +62,7 @@ const ProfilePage = () => {
               </div>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <strong>Name:</strong> {user.name}
+                  <strong>Name:</strong> {user.name || user.firstName || 'User'}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Email:</strong> {user.email}
@@ -72,7 +79,7 @@ const ProfilePage = () => {
             <Card.Body>
               <Card.Title>Favorites</Card.Title>
               <ListGroup>
-                {user.favorites.map((item, index) => (
+                {favorites.map((item, index) => (
                   <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
                     {item}
                     <Button variant="outline-danger" size="sm">Remove</Button>
@@ -90,7 +97,7 @@ const ProfilePage = () => {
             <Card.Body>
               <Card.Title>Order History</Card.Title>
               <ListGroup variant="flush">
-                {user.orderHistory.map((order, index) => (
+                {orderHistory.map((order, index) => (
                   <ListGroup.Item key={index}>
                     <div className="d-flex justify-content-between">
                       <div>

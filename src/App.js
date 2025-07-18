@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 // import IceCreamCarousel from './components/Carousel';
@@ -19,6 +20,12 @@ import FlavorRecommendation from './pages/FlavorRecommendation';
 import FeedbackForm from './pages/Feedbackform';
 import SpinWheel from './pages/SpinWheel';
 import AboutUs from './pages/aboutUs';
+
+// ProtectedRoute component for user-only pages
+function ProtectedRoute({ children }) {
+  const isLoggedIn = !!localStorage.getItem('currentUser');
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+}
 
 const App = () => {
   return (
@@ -40,7 +47,11 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
 
         {/* User-Specific Route */}
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        } />
         {/* Admin Routes */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-menu-management" element={<AdminMenuManagement />} />

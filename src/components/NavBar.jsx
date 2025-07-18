@@ -129,6 +129,10 @@ const NavBar = () => {
                 align="end"
                 className="mx-2"
               >
+                <NavDropdown.Item href="/profile" className="d-flex align-items-center">
+                  <FaUser size={16} className="me-2" /> Profile
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
                 <NavDropdown.Item disabled>
                   <span className="fw-bold">{loggedInUser.email}</span>
                 </NavDropdown.Item>
