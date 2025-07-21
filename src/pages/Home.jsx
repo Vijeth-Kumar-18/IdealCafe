@@ -1,9 +1,11 @@
 import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Container, Row, Col, Button, Badge } from 'react-bootstrap';
 import { StarFill, GiftFill, ClockFill } from 'react-bootstrap-icons';
 import IceCreamCarousel from '../components/Carousel';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [todaysSpecial] = useState({
     name: "Butterscotch Bliss",
     description: "A creamy delight with caramel and crunchy nuts",
@@ -131,7 +133,7 @@ const Home = () => {
       <Container>
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="fw-bold mb-0">Our Signature Creations</h2>
-          <Button variant="outline-warning">View All</Button>
+          <Button variant="outline-warning" onClick={() => navigate('/menu')}>View All</Button>
         </div>
         
         <Row className="g-4 mb-5">
