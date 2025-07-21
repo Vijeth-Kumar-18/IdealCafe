@@ -4,7 +4,6 @@
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 An interactive, modern café web application for ordering, offers, and user engagement.
 
@@ -21,10 +20,6 @@ An interactive, modern café web application for ordering, offers, and user enga
 - 📱 Responsive, mobile-friendly UI
 
 ---
-
-## 📸 Demo & Screenshots
-
-> _Add your app screenshots or a demo GIF here!_
 
 ---
 
