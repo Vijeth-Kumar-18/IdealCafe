@@ -81,9 +81,12 @@ const Offers = () => {
     wheelRef.current.style.transform = `rotate(${rotation}deg)`;
 
     setTimeout(() => {
-      setWinner(segments[randomIndex]);
+      const wonOffer = segments[randomIndex];
+      setWinner(wonOffer);
       setShowWinnerModal(true);
       setIsSpinning(false);
+      // Store the won offer in localStorage for checkout usage
+      localStorage.setItem('wonOffer', JSON.stringify(wonOffer));
     }, 4000);
   };
 
