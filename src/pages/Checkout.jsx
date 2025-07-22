@@ -20,6 +20,16 @@ import {
 } from 'react-bootstrap-icons';
 
 const Checkout = () => {
+  // Get any won offer from localStorage
+  const getWonOffer = () => {
+    try {
+      return JSON.parse(localStorage.getItem('wonOffer'));
+    } catch {
+      return null;
+    }
+  };
+  const [wonOffer] = useState(getWonOffer());
+
   const [orderDetails, setOrderDetails] = useState({ 
     name: '', 
     phone: '', 
@@ -47,8 +57,20 @@ const Checkout = () => {
   }, []);
 
   const totalCost = orderSummary.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const tax = totalCost * 0.05; // 5% tax
-  const grandTotal = totalCost + tax;
+  let discount = 0;
+  let freebie = null;
+  if (wonOffer) {
+    if (wonOffer === '10% OFF') discount = totalCost * 0.10;
+    if (wonOffer === '15% OFF') discount = totalCost * 0.15;
+    if (wonOffer === '20% OFF') discount = totalCost * 0.20;
+    if (wonOffer === '₹50 OFF') discount = 50;
+    if (wonOffer === 'Free Sundae') freebie = 'Sundae';
+    if (wonOffer === 'Free Drink') freebie = 'Drink';
+    if (wonOffer === 'Free Cone') freebie = 'Cone';
+    // BOGO is not applied here, but could be implemented for eligible items
+  }
+  const tax = (totalCost - discount) * 0.02;
+  const grandTotal = Math.max(0, totalCost - discount + tax);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -131,12 +153,22 @@ const Checkout = () => {
                   <span>Subtotal</span>
                   <span>₹{totalCost.toFixed(2)}</span>
                 </ListGroup.Item>
-                
+                {discount > 0 && (
+                  <ListGroup.Item className="d-flex justify-content-between py-2 text-success">
+                    <span>Spin Wheel Discount ({wonOffer})</span>
+                    <span>-₹{discount.toFixed(2)}</span>
+                  </ListGroup.Item>
+                )}
+                {freebie && (
+                  <ListGroup.Item className="d-flex justify-content-between py-2 text-info">
+                    <span>Spin Wheel Freebie</span>
+                    <span>{freebie}</span>
+                  </ListGroup.Item>
+                )}
                 <ListGroup.Item className="d-flex justify-content-between py-2">
-                  <span>Tax (5%)</span>
+                  <span>Tax (2%)</span>
                   <span>₹{tax.toFixed(2)}</span>
                 </ListGroup.Item>
-                
                 <ListGroup.Item className="d-flex justify-content-between py-2 fw-bold fs-5">
                   <span>Total</span>
                   <span>₹{grandTotal.toFixed(2)}</span>
